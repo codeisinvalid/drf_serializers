@@ -8,8 +8,13 @@ from django.http import HttpResponse
 def student_detail(request, pk):
     stu = Student.objects.get(id=pk)
     serializer = StudentSerializer(stu)
-    json_data = JSONRenderer().render(serializer.data)
+    json_data = JSONRenderer().render(serializer.data)    #the serializer.data is a native python data type i.e., dict
     return HttpResponse(json_data, content_type='application/json')
 
-
+# Query set - all students data
+def student_list(request):
+    stu = Student.objects.all()
+    serializer = StudentSerializer(stu, many=True)
+    json_data = JSONRenderer().render(serializer.data)
+    return HttpResponse(json_data, content_type = 'application/json')
  
